@@ -1,6 +1,5 @@
 // content.js
-alert("Hello from your Chrome extension!")
-
+// no used at the moment
 chrome.storage.local.get('enabled', data => {
     if (data.enabled) {
         //it is enabled, do accordingly
