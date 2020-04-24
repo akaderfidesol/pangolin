@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test</title>
+	<script type="text/javascript">
+
+		
+
+		function llamada(){
+			var miVariable = [['Adiós'],['mundo'],['test'],['Adiós']];
+
+			var textPage = ".Adiós.hola mundo mundo este es un test para ver que pasa aquí, mundo, mundo, mundo.";
+
+			ReadText(textPage,miVariable);
+		}
+
+		function ReadText(text,keywords) {
+
+			var textSplited = text.split(/[-., ]/);
+			var count = 0;
+
+			for (var i = 0; i < textSplited.length; i++) {
+				for (var j = 0; j < keywords.length; j++){
+					if (keywords[j] == textSplited[i]) {
+						count++;
+					}
+				}
+			}
+			console.log(count);
+		}
+
+
+	</script>
+</head>
+<body>
+	<h1>Hola</h1>
+	<button onclick="llamada();">Probar</button>
+</body>
+</html>
