@@ -1,9 +1,13 @@
 // content.js
-
-chrome.storage.onChanged.addListener(function(changes) {
-    var action = changes['activate'];
-    if(action.newValue === 'executeCode') {
-                //LLAMADA A CODIGO AQUI
-        alert('Botón Pangolin activado');
+function getNewProperties() {
+    var title = document.querySelector('meta[property="og:title"]').getAttribute("content")
+    var description = document.querySelector('meta[property="og:description"]').getAttribute("content")
+    return {
+        title:title,
+        description: description
     }
-});
+}
+
+var properties = getNewProperties()
+
+alert("Title: " + properties.title + " Description: " + properties.description)
