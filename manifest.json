@@ -1,0 +1,27 @@
+{
+    "name": "Pangolin Fake Detector",
+    "version": "0.1",
+    "manifest_version": 2,
+    "description": "Contrasta la información o títulos de las noticias que se visualizan en el navegador con páginas verificadoras para intentar detectar FAKE NEWS.",
+    "icons": {
+      "128": "pangolin.png"
+    },
+    "background": {
+      "persistent": false,
+      "scripts": ["background_script.js"]
+    },
+    "permissions": ["activeTab"],
+    "browser_action": {
+      "default_icon": "pangolin.png",
+      "default_popup": "popup.html",
+      "default_title": "Pangolin Journal Fake detector"
+    },
+    "content_scripts": [
+  {
+    "matches": [
+      "<all_urls>"
+    ],
+    "js": ["content.js"]
+  }
+]
+  }
