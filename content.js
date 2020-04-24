@@ -1,9 +1,13 @@
 // content.js
-// no used at the moment
-chrome.storage.local.get('enabled', data => {
-    if (data.enabled) {
-        //it is enabled, do accordingly
-    } else {
-        //it is disabled
+function getNewProperties() {
+    var title = document.querySelector('meta[property="og:title"]').getAttribute("content")
+    var description = document.querySelector('meta[property="og:description"]').getAttribute("content")
+    return {
+        title:title,
+        description: description
     }
-});
+}
+
+var properties = getNewProperties()
+
+alert("Title: " + properties.title + " Description: " + properties.description)

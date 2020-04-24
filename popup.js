@@ -1,9 +1,6 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var checkPageButton = document.getElementById('activate');
-    checkPageButton.addEventListener('click', function() {
-        chrome.tabs.getSelected(null, function(tab){
-            //METER LLAMADA AL PROCESO AQUí
-            alert("PANGOLIN FUNCIONANDO EN ESTA PÁGINA");
-        });
-    },false );
-}, false);
+// Called when popup.html button is
+document.getElementById('activate').addEventListener('click', function() {
+    chrome.tabs.executeScript(null, {
+        file: "content.js"
+    });
+});
