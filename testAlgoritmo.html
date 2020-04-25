@@ -3,26 +3,42 @@
 <head>
 	<title>Test</title>
 	<script type="text/javascript">
-
 		
+		var openFile = function(event) {
+	        var input = event.target;
 
-		function llamada(){
-			var miVariable = "Tijeretazo en Italia:  eliminan 230 diputados y 115 senadores";
+	        var reader = new FileReader();
+	        reader.onload = function(){
+	          	var noticia = reader.result;
+	          
+	          	//console.log(text);
 
-			var textPage = "Nos habéis preguntado por un contenido que dice que la crisis del coronavirus rebaja en Italia el número de políticos y, también, por otro que dice que recortan el gasto político y eliminan 230 diputados y 115 senadores en Italia en plena crisis del coronavirus. Es un bulo: las dos páginas web se hacen eco de una noticia publicada por La Razón en octubre de 2019 y el contenido que mueven está descontextualizado. ESPECIAL CORONAVIRUS:  Consúltalo aquí. La noticia de La Razón, cuyo título es Tijeretazo en Italia: se eliminan 230 diputados y 115 senadores, se publicó el pasado 8 de octubre de 2019. Todos los partidos aprobaron la ley que recorta en un tercio el número de diputados y senadores de cara a la próxima legislatura por lo que la Cámara de Diputados pasara de tener 630 escaños a 400, explican desde este medio. Es decir, la medida para reducir el número de parlamentarios italianos no se ha aprobado en plena crisis del coronavirus ni por la crisis del coronavirus. Sin embargo, la ley aprobada el pasado 8 de octubre, no entró inmediatamente en vigor, sino que era preciso que durante los próximos tres meses después de su publicación en la Gaceta Oficial se convocase un referéndum para confirmarla. En Italia, estaba previsto que este referéndum constitucional se celebrara el 29 de marzo. Pero la crisis del coronavirus ha provocado que se prorrogue. Por el momento, el primer ministro italiano, Giuseppe Conte, todavía no ha dado una nueva fecha para la votación. Por lo tanto, no es cierto que la crisis del coronavirus rebaja en Italia el número de políticos ni tampoco que recortan el gasto político y eliminan 230 diputados y 115 senadores en Italia en plena crisis del coronavirus porque son contenidos que se mueven de manera descontextualizada.";
+	          	var titulo = "Se dispararon perfiles falsos entre los seguidores de Pedro Sánchez en Twitter";
+				readText(noticia,titulo);
+
+	        };
+	        reader.readAsText(input.files[0]);
+	    };
+
+		/*function llamada(){
+			var miVariable = "China amplía las restricciones en sus nuevos focos de infección";
+
+			readTextFile("noticia.txt");
+
+			var textPage = "";
 
 			readText(textPage,miVariable);
-		}
+		}*/
 
 		function readText(text,keywords) {
 
 			var completeKeywInText = searchCompleteText(text,keywords);
-			var numberText = 0;
+			var textLength = 0;
 			var percent = 0;
 			var keys = 0;
 			var badKeys = 0;
 			var textSplited = 0;
-			var count = 0;
+			var matchWords = 0;
 
 
 			if (completeKeywInText === 0) {
@@ -54,13 +70,13 @@
 				for (var i = 0; i < textSplited.length; i++) {
 					for (var j = 0; j < keys.length; j++){
 						if (keys[j] == textSplited[i] && keys[j] != "") {
-							count++;
+							matchWords++;
 						}
 					}
 				}
 
-				numberText = textSplited.length;
-				percent = (count * 100) / numberText;
+				textLength = textSplited.length;
+				percent = (matchWords * 100) / textLength;
 
 				
 			}
@@ -82,7 +98,7 @@
 			}
 
 			console.log("------Información de las variables--------");
-			console.log("Coincidencias en keywords: "+count);
+			console.log("Coincidencias en keywords: "+matchWords);
 			console.log("Porcentaje de coincidencias: "+percent+"%");
 			console.log(keys);
 			console.log(textSplited);
@@ -115,6 +131,8 @@
 </head>
 <body>
 	<h1>Pangolin</h1>
+	<input type='file' accept='text/plain' onchange='openFile(event)'><br>
+    <div id='output'>
 	<button onclick="llamada();">Probar</button>
 </body>
 </html>
