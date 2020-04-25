@@ -38,7 +38,7 @@
      *  Text: extraido del 'content' de los json de prueba
      *  keywords: extraido del 'title' de los json de prueba
      */
-    function algoritm(text, keywords, threshold={min:0.03, max:0.05}){
+    function algoritm(text, keywords, threshold={min:3, max:5}){
       var completeKeywInText = searchCompleteText(text,keywords);
 			var textLength = 0;
 			var percent = 0;
@@ -86,6 +86,8 @@
 				percent = (matchWords * 100) / textLength;
 
 				
+      }else{
+        percent=100;
       }
 
       var isFake=false;
@@ -168,8 +170,6 @@
 
     }
     
-
-
     function test_case(){
       console.debug("Procesa los datos de pruebas");
       console.debug(dataTest);
@@ -185,6 +185,6 @@
 	<h1>Pangolin</h1>
 	<input type='file' accept='text/plain' onchange='openFile(event)'><br>
     <div id='output'>
-	<button onclick="llamada();">Probar</button>
+	<button onclick="readText();">Probar</button>
 </body>
 </html>

@@ -1,7 +1,7 @@
 var template={
   title:'', //Título de la noticia que se va  avaluar si es o no Fake <meta property="og:title" value=?/>
   description:'', //Descripción extraida del meta. <meta property="og:description" value="?">
-  content:'', // Contenido que se evaluará
+  content:'', // Contenido que se evaluará de la fuente de maldia u otra web
   isFake:true, //Resultado simplificado del algoritmo
   support_info:'', //Información de apoyo al equipo técnico. No se usa en el algoritmo
 }
