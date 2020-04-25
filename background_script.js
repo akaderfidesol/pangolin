@@ -66,17 +66,30 @@ function call(search) {
       // Procesamiento del primer link
       var nlinks = 1;
       var result;
+      console.log(links.length);
       if (links.length > 0) {
         for (var i = 0; i < nlinks; i++) {
+        	console.log(links[i]);
           getHTML(links[i], function (response) {
             var body = getArticleBody(response);
-            updateHTML({
-              name: "Maldita",
-              link: links[i],
-              score: 10
-            })
+            
             // Abdul procesa el body
             result = algoritm(body, search);
+
+            var domainName = links[i].replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
+            var fake;
+            console.log(result);
+
+            var roundDecimal = round(result.percent, 2);
+
+            updateHTML({
+		        name: domainName,
+		        link: links[i],
+		        score: roundDecimal
+	        })
+            
+
+            
 
           });
         }
@@ -85,6 +98,10 @@ function call(search) {
       }
     });
   }
+}
+
+function round(value, decimals) {
+  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
 
