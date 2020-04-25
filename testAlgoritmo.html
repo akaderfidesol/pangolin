@@ -5,7 +5,7 @@
   <script src="data.js"></script>
 	<script type="text/javascript">
 		
-		var openFile = function(event) {
+		/*var openFile = function(event) {
 	        var input = event.target;
 
 	        var reader = new FileReader();
@@ -19,7 +19,7 @@
 
 	        };
 	        reader.readAsText(input.files[0]);
-	    };
+	    };*/
 
 		/*function llamada(){
 			var miVariable = "China amplía las restricciones en sus nuevos focos de infección";
@@ -37,148 +37,150 @@
      *  Text: extraido del 'content' de los json de prueba
      *  keywords: extraido del 'title' de los json de prueba
      */
-    function algoritm(text, keywords, threshold={min:3, max:5}){
-      		var completeKeywInText = searchCompleteText(text,keywords);
-			var textLength = 0;
-			var percent = 0;
-			var keys = 0;
-			var badKeys = 0;
-			var textSplited = 0;
-			var matchWords = 0;
+    	function algoritm(text, keywords, threshold = {
+		    min: 3,
+		    max: 5
+		}) {
+		    var completeKeywInText = searchCompleteText(text, keywords);
+		    var textLength = 0;
+		    var percent = 0;
+		    var keys = 0;
+		    var badKeys = 0;
+		    var textSplited = 0;
+		    var matchWords = 0;
 
 
-			if (completeKeywInText === 0) {
-				//cambiamos a minúsculas todo el texto
-				keywords = keywords.toLowerCase();
-				text = text.toLowerCase();
+		    if (completeKeywInText === 0) {
+		        //cambiamos a minúsculas todo el texto
+		        keywords = keywords.toLowerCase();
+		        text = text.toLowerCase();
 
 
-				//extraemos los carácteres innecesarios
-				keys = keywords.split(/[-+, .]/);
+		        //extraemos los carácteres innecesarios
+		        keys = keywords.split(/[-+, .]/);
 
-				//eliminamos elementos duplicados en el array
-				keys = keys.filter(onlyUnique);
+		        //eliminamos elementos duplicados en el array
+		        keys = keys.filter(onlyUnique);
 
-				//badKeys = ["de","el","la","lo","le","en","que","a","e","y","o","u","ha","se","del","con","más"];
-				//console.log(keys);
-				for( var i = 0; i < keys.length; i++){ 
-					//console.log(i+ ": "+ keys[i].length);
-					if (keys[i].length <= 3) {
-						keys[i] = "";
-						
-					}
+		        //badKeys = ["de","el","la","lo","le","en","que","a","e","y","o","u","ha","se","del","con","más"];
+		        //console.log(keys);
+		        for (var i = 0; i < keys.length; i++) {
+		            //console.log(i+ ": "+ keys[i].length);
+		            if (keys[i].length <= 3) {
+		                keys[i] = "";
 
-				}
-				//console.log(keys);
+		            }
 
-				textSplited = text.split(/[-+, .]/);
+		        }
+		        //console.log(keys);
 
-				//cantidad de palabras que coinciden
-				for (var i = 0; i < textSplited.length; i++) {
-					for (var j = 0; j < keys.length; j++){
-						if (keys[j] == textSplited[i] && keys[j] != "") {
-							matchWords++;
-						}
-					}
-				}
+		        textSplited = text.split(/[-+, .]/);
 
-				textLength = textSplited.length;
-				percent = (matchWords * 100) / textLength;
+		        //cantidad de palabras que coinciden
+		        for (var i = 0; i < textSplited.length; i++) {
+		            for (var j = 0; j < keys.length; j++) {
+		                if (keys[j] == textSplited[i] && keys[j] != "") {
+		                    matchWords++;
+		                }
+		            }
+		        }
 
-				
-      }else{
-        percent=100;
-      }
-
-      var isFake=false;
-      if(percent<threshold['min']){
-        isFake = false;
-      }else if ( percent>threshold['min'] && percent<threshold['max']){
-        isFake = false;
-      }else if(percent>threshold['max']){
-        isFake = true;
-      }else{
-        isFake=false;
-        console.error("Error en comparaciones. Probablemente de código.")
-      }
+		        textLength = textSplited.length;
+		        percent = (matchWords * 100) / textLength;
 
 
-      return {
-        percent:percent,
-        completeKeywInText:completeKeywInText,
-        matchWords:matchWords,
-        keys:keys,
-        textSplited:textSplited,
-        isFake:isFake,
-      };
-    }
+		    } else {
+		        percent = 100;
+		    }
+
+		    var isFake = false;
+		    if (percent < threshold['min']) {
+		        isFake = false;
+		    } else if (percent > threshold['min'] && percent < threshold['max']) {
+		        isFake = false;
+		    } else if (percent > threshold['max']) {
+		        isFake = true;
+		    } else {
+		        isFake = false;
+		        console.error("Error en comparaciones. Probablemente de código.")
+		    }
 
 
-		function readText(text,keywords) {
-	      var result = algoritm(text,keywords);
-	      var percent = result['percent'];
-	      var completeKeywInText = result['completeKeywInText'];
-	      var matchWords = result['matchWords'];
-	      var keys = result['keys'];
-	      var textSplited = result['textSplited'];
-			
+		    return {
+		        percent: percent,
+		        completeKeywInText: completeKeywInText,
+		        matchWords: matchWords,
+		        keys: keys,
+		        textSplited: textSplited,
+		        isFake: isFake,
+		    };
+		}
 
 
-			// Determinamos la escala del bulo
-			/*if (percent < 3) {
-				console.log("No es bulo");
-			}
-			else if (percent >= 3 && percent <= 5){
-				console.log("Posible bulo");
-			}
-			else if (percent > 5) {
-				console.log("Es bulo.");
-			}
+		function readText(text, keywords) {
+		    var result = algoritm(text, keywords);
+		    var percent = result['percent'];
+		    var completeKeywInText = result['completeKeywInText'];
+		    var matchWords = result['matchWords'];
+		    var keys = result['keys'];
+		    var textSplited = result['textSplited'];
 
-			if (completeKeywInText === 1) {
-				console.log("el título existe en la descripción de forma exacta, por lo que se considera bulo.");
-			}
 
-			console.log("------Información de las variables--------");
-			console.log("Coincidencias en keywords: "+matchWords);
-			console.log("Porcentaje de coincidencias: "+percent+"%");
-			console.log(keys);
-			console.log(textSplited);*/
+
+		    // Determinamos la escala del bulo
+		    /*if (percent < 3) {
+		    	console.log("No es bulo");
+		    }
+		    else if (percent >= 3 && percent <= 5){
+		    	console.log("Posible bulo");
+		    }
+		    else if (percent > 5) {
+		    	console.log("Es bulo.");
+		    }
+
+		    if (completeKeywInText === 1) {
+		    	console.log("el título existe en la descripción de forma exacta, por lo que se considera bulo.");
+		    }
+
+		    console.log("------Información de las variables--------");
+		    console.log("Coincidencias en keywords: "+matchWords);
+		    console.log("Porcentaje de coincidencias: "+percent+"%");
+		    console.log(keys);
+		    console.log(textSplited);*/
 		}
 
 		// Función para extraer elementos duplicados
-		function onlyUnique(value, index, self) { 
+		function onlyUnique(value, index, self) {
 		    return self.indexOf(value) === index;
 		}
 
 
 		// Función para buscar el título completo en el texto.
-		function searchCompleteText(text,keywords){
-			var result;
+		function searchCompleteText(text, keywords) {
+		    var result;
 
-			text = text.toLowerCase();
-			keywords = keywords.toLowerCase();
+		    text = text.toLowerCase();
+		    keywords = keywords.toLowerCase();
 
-			if (text.includes(keywords) == true) {
-				result = 1;
+		    if (text.includes(keywords) == true) {
+		        result = 1;
 
-			}
-			else{
-				result = 0;
-			}
-			return result;
+		    } else {
+		        result = 0;
+		    }
+		    return result;
 
-    }
-    
-    function test_case(){
-      console.debug("Procesa los datos de pruebas");
-      console.debug(dataTest);
-      dataTest.forEach(test => {
-        var info = algoritm(test['content'],test['title']);
-        console.debug(test['title']+" resultado: "+info['percent']+" correcto:"+((test['isFake']==info['isFake'])?"CORRECTO":"FALLO"));
-      });
-    }
-    test_case();
+		}
+
+		function test_case() {
+		    console.debug("Procesa los datos de pruebas");
+		    console.debug(dataTest);
+		    dataTest.forEach(test => {
+		        var info = algoritm(test['content'], test['title']);
+		        console.debug(test['title'] + " resultado: " + info['percent'] + " correcto:" + ((test['isFake'] == info['isFake']) ? "CORRECTO" : "FALLO"));
+		    });
+		}
+		test_case();
 	</script>
 </head>
 <body>
