@@ -13,7 +13,7 @@
 	          
 	          	//console.log(text);
 
-	          	var titulo = "Se dispararon perfiles falsos entre los seguidores de Pedro Sánchez en Twitter";
+	          	var titulo = "España es el país con más contagios entre el personal sanitario";
 				readText(noticia,titulo);
 
 	        };
@@ -53,16 +53,17 @@
 				//eliminamos elementos duplicados en el array
 				keys = keys.filter(onlyUnique);
 
-				badKeys = ["de","el","la","lo","le","en","que","a","e","y","o","u","ha","se","del"];
-
+				//badKeys = ["de","el","la","lo","le","en","que","a","e","y","o","u","ha","se","del","con","más"];
+				console.log(keys);
 				for( var i = 0; i < keys.length; i++){ 
-					for( var j = 0; j < badKeys.length; j++){
-						if ( keys[i] === badKeys[j]) 
-						{ 
-							keys.splice(i, 1); 
-						}
+					console.log(i+ ": "+ keys[i].length);
+					if (keys[i].length <=3) {
+						keys.splice(i, 1); 
+						
 					}
+
 				}
+				console.log(keys);
 
 				textSplited = text.split(/[-+, .]/);
 
@@ -133,6 +134,5 @@
 	<h1>Pangolin</h1>
 	<input type='file' accept='text/plain' onchange='openFile(event)'><br>
     <div id='output'>
-	<button onclick="llamada();">Probar</button>
 </body>
 </html>
