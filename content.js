@@ -11,3 +11,7 @@ function getNewProperties() {
 var properties = getNewProperties()
 
 alert("Title: " + properties.title + " Description: " + properties.description)
+
+var msg = '{"funct":"call", "params":"'+properties.title+'"}';
+
+chrome.runtime.sendMessage({ msg: msg });

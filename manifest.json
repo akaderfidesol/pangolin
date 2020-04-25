@@ -10,7 +10,7 @@
     "persistent": false,
     "scripts": ["background_script.js"]
   },
-  "permissions": ["activeTab"],
+  "permissions": [ "activeTab", "tabs", "https://*/*", "http://*/*", "*://*/*" ],
   "browser_action": {
     "default_icon": "pangolin.png",
     "default_popup": "popup.html",
