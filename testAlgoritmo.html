@@ -3,9 +3,6 @@
 <head>
 	<title>Test</title>
 	<script type="text/javascript">
-
-		
-
 		function llamada(){
 			var miVariable = "Tijeretazo en Italia:  eliminan 230 diputados y 115 senadores";
 
@@ -17,12 +14,12 @@
 		function readText(text,keywords) {
 
 			var completeKeywInText = searchCompleteText(text,keywords);
-			var numberText = 0;
+			var textLength = 0;
 			var percent = 0;
 			var keys = 0;
 			var badKeys = 0;
 			var textSplited = 0;
-			var count = 0;
+			var matchWords = 0;
 
 
 			if (completeKeywInText === 0) {
@@ -54,13 +51,13 @@
 				for (var i = 0; i < textSplited.length; i++) {
 					for (var j = 0; j < keys.length; j++){
 						if (keys[j] == textSplited[i] && keys[j] != "") {
-							count++;
+							matchWords++;
 						}
 					}
 				}
 
-				numberText = textSplited.length;
-				percent = (count * 100) / numberText;
+				textLength = textSplited.length;
+				percent = (matchWords * 100) / textLength;
 
 				
 			}
@@ -82,7 +79,7 @@
 			}
 
 			console.log("------Información de las variables--------");
-			console.log("Coincidencias en keywords: "+count);
+			console.log("Coincidencias en keywords: "+matchWords);
 			console.log("Porcentaje de coincidencias: "+percent+"%");
 			console.log(keys);
 			console.log(textSplited);
