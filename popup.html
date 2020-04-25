@@ -1,17 +1,73 @@
 <!DOCTYPE html>
 <html>
-  <head>Pangolin Fake Detector</head>
-  <style type="text/css">
-    body {
-      margin: 5px;
+
+  <head>
+    <style type="text/css">
+
+    .logo img{
+      width: 100px;
     }
-    h1 {
-      font-size: 15px;
+    .logo{
       text-align: center;
     }
+    body{
+      width: 300px;
+      font-family: "Arial";
+      font-size: 16px;
+      color: #909090;
+
+    }
+    .content img{
+      text-align: center;
+    }
+    .title{
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .myButton {
+      background-color:#44c767;
+      border-radius:7px;
+      display:inline-block;
+      cursor:pointer;
+      color:#ffffff;
+      font-family:Arial;
+      font-size:17px;
+      padding:12px 22px;
+      text-decoration:none;
+    }
+    .myButton:hover {
+      background-color:#5cbf2a;
+    }
+    .myButton:active {
+      position:relative;
+      top:1px;
+    }
+
+
+    .checkButton{
+      text-align: center;
+    }
+
   </style>
+    
+  </head>
+  
   <body>
-    <button id="activate">Activar Pangolin</button>
+    <div class="content">
+      <div class="logo"><img src="pangolin.png"></div>
+      <p class="title">Check the veracity of this news</p>
+      
+      <div class="checkButton">
+        <button class="myButton" id="activate"> Check </button>
+      </div>
+      
+    </div>
+
+    <div class="results">
+      
+    </div>
+    
     <script type="text/javascript" src="popup.js"></script>
   </body>
 </html>
