@@ -20,7 +20,6 @@
 	        };
 	        reader.readAsText(input.files[0]);
 	    };
->>>>>>>>> Temporary merge branch 2
 
 		/*function llamada(){
 			var miVariable = "China amplía las restricciones en sus nuevos focos de infección";
@@ -39,7 +38,7 @@
      *  keywords: extraido del 'title' de los json de prueba
      */
     function algoritm(text, keywords, threshold={min:3, max:5}){
-      var completeKeywInText = searchCompleteText(text,keywords);
+      		var completeKeywInText = searchCompleteText(text,keywords);
 			var textLength = 0;
 			var percent = 0;
 			var keys = 0;
@@ -61,16 +60,16 @@
 				keys = keys.filter(onlyUnique);
 
 				//badKeys = ["de","el","la","lo","le","en","que","a","e","y","o","u","ha","se","del","con","más"];
-				console.log(keys);
+				//console.log(keys);
 				for( var i = 0; i < keys.length; i++){ 
-					console.log(i+ ": "+ keys[i].length);
-					if (keys[i].length <=3) {
-						keys.splice(i, 1); 
+					//console.log(i+ ": "+ keys[i].length);
+					if (keys[i].length <= 3) {
+						keys[i] = "";
 						
 					}
 
 				}
-				console.log(keys);
+				//console.log(keys);
 
 				textSplited = text.split(/[-+, .]/);
 
@@ -116,17 +115,17 @@
 
 
 		function readText(text,keywords) {
-      var result = algoritm(text,keywords);
-      var percent = result['percent'];
-      var completeKeywInText = result['completeKeywInText'];
-      var matchWords = result['matchWords'];
-      var keys = result['keys'];
-      var textSplited = result['textSplited'];
+	      var result = algoritm(text,keywords);
+	      var percent = result['percent'];
+	      var completeKeywInText = result['completeKeywInText'];
+	      var matchWords = result['matchWords'];
+	      var keys = result['keys'];
+	      var textSplited = result['textSplited'];
 			
 
 
 			// Determinamos la escala del bulo
-			if (percent < 3) {
+			/*if (percent < 3) {
 				console.log("No es bulo");
 			}
 			else if (percent >= 3 && percent <= 5){
@@ -144,7 +143,7 @@
 			console.log("Coincidencias en keywords: "+matchWords);
 			console.log("Porcentaje de coincidencias: "+percent+"%");
 			console.log(keys);
-			console.log(textSplited);
+			console.log(textSplited);*/
 		}
 
 		// Función para extraer elementos duplicados
@@ -186,6 +185,6 @@
 	<h1>Pangolin</h1>
 	<input type='file' accept='text/plain' onchange='openFile(event)'><br>
     <div id='output'>
-	<button onclick="readText();">Probar</button>
+
 </body>
 </html>
