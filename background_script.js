@@ -6,6 +6,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 });
 
+function updateHTML(data) {
+  chrome.runtime.sendMessage({ data: data});
+}
+
 function getHTML(url, callback) {
   var request = new XMLHttpRequest();
 
@@ -65,7 +69,11 @@ function call(search) {
         for (var i = 0; i < nlinks; i++) {
           getHTML(links[i], function (response) {
             var body = getArticleBody(response);
-            console.log(body);
+            updateHTML({
+              name: "Maldita",
+              link: links[i],
+              score: 10
+            })
             // Abdul procesa el body
           });
         }
