@@ -46,16 +46,18 @@ function call(search) {
   // query para el buscador de Google
   count = 0;
   var query = search.split(" ").join("+");
-  
+  //query = "hola";
   for (var lp = 0; lp < list_pages.length; lp++) {
     var page = list_pages[lp];
     var url = "https://www.google.es/search?as_q=" + query + "&as_sitesearch=" + page;
+    //var url = "https://es.search.yahoo.com/search/?p="+query+"+site:"+page;
     //console.log(url);
 
     getHTML(url, function (response) {
       var res = document.createElement("div");
       res.innerHTML = response.responseText;
       var data = res.querySelector("#search");
+      //var data = res.querySelector("#results");
       var aNodes = data.querySelectorAll("a");
       var links = [];
 
@@ -71,7 +73,7 @@ function call(search) {
         }
       }
 
-      //console.log(links)
+      console.log(links)
 
       // Procesamiento del primer link
       var nlinks = 1;
