@@ -1,4 +1,4 @@
-list_pages = ["newtral.es", "maldita.es"];
+list_pages = ["newtral.es", "maldita.es","fullfact.org"];
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.msg.title) {
@@ -10,12 +10,20 @@ function updateHTML(data) {
   chrome.runtime.sendMessage({ data: data});
 }
 
+function askFinished(info) {
+  chrome.runtime.sendMessage({ info: info});
+}
+
 function getHTML(url, callback) {
   var request = new XMLHttpRequest();
 
   request.onload = function () {
-    if (this.readyState == 4 && this.status == 200)
-      callback(request);
+    if (
+      this.readyState == 4 &&
+      this.status == 200
+    )
+      if (request.getResponseHeader("Content-Type").includes("text/html"))
+        callback(request);
   };
 
   request.open("GET", url, true);
@@ -33,10 +41,12 @@ function getArticleBody(response) {
   return body;
 }
 
+var count = 0;
 function call(search) {
   // query para el buscador de Google
+  count = 0;
   var query = search.split(" ").join("+");
-
+  
   for (var lp = 0; lp < list_pages.length; lp++) {
     var page = list_pages[lp];
     var url = "https://www.google.es/search?as_q=" + query + "&as_sitesearch=" + page;
@@ -67,11 +77,13 @@ function call(search) {
       var nlinks = 1;
       var result;
       console.log(links.length);
-
+      
       if (links.length > 0) {
+
         for (var i = 0; i < nlinks; i++) {
         	console.log(links[i]);
           getHTML(links[i], function (response) {
+          	count ++;
             var body = getArticleBody(response);
             var linkA =  response.responseURL;
             // Abdul procesa el body
@@ -81,26 +93,37 @@ function call(search) {
 
             var domainName = linkA.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
             var fake;
-            
 
             var roundDecimal = round(result.percent, 2);
 
-            updateHTML({
+            if (result.isFake === false) {
+            	updateHTML(null)
+            }
+            else{
+            	updateHTML({
 		        name: domainName,
 		        link: linkA,
 		        score: roundDecimal
 	        })
-            
 
-            
-
+            }
           });
         }
+
       } else {
         console.log("No results for article");
+        updateHTML(null)
       }
+      
     });
+    
   }
+
+    console.log("Linkssssss: "+count);
+	askFinished({
+			count: count
+			
+		})
 }
 
 function round(value, decimals) {
@@ -110,7 +133,7 @@ function round(value, decimals) {
 
 function algoritm(text, keywords, threshold = {
     min: 3,
-    max: 5
+    max: 4.5
 }) {
     var completeKeywInText = searchCompleteText(text, keywords);
     var textLength = 0;
