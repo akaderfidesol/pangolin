@@ -15,7 +15,7 @@ function getHTML(url, callback) {
 
   request.onload = function () {
     if (this.readyState == 4 && this.status == 200)
-      callback(request.responseText);
+      callback(request);
   };
 
   request.open("GET", url, true);
@@ -24,7 +24,7 @@ function getHTML(url, callback) {
 
 function getArticleBody(response) {
   var content = document.createElement("div");
-  content.innerHTML = response;
+  content.innerHTML = response.responseText;
   var body = "";
   nodes = content.querySelectorAll("p, h1, h2, h3, h4, span");
   nodes.forEach(function (n) {
@@ -44,7 +44,7 @@ function call(search) {
 
     getHTML(url, function (response) {
       var res = document.createElement("div");
-      res.innerHTML = response;
+      res.innerHTML = response.responseText;
       var data = res.querySelector("#search");
       var aNodes = data.querySelectorAll("a");
       var links = [];
@@ -67,24 +67,27 @@ function call(search) {
       var nlinks = 1;
       var result;
       console.log(links.length);
+
       if (links.length > 0) {
         for (var i = 0; i < nlinks; i++) {
         	console.log(links[i]);
           getHTML(links[i], function (response) {
             var body = getArticleBody(response);
-            
+            var linkA =  response.responseURL;
             // Abdul procesa el body
+            console.log("Link: "+links[i]);
             result = algoritm(body, search);
-
-            var domainName = links[i].replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
-            var fake;
             console.log(result);
+
+            var domainName = linkA.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
+            var fake;
+            
 
             var roundDecimal = round(result.percent, 2);
 
             updateHTML({
 		        name: domainName,
-		        link: links[i],
+		        link: linkA,
 		        score: roundDecimal
 	        })
             
@@ -134,7 +137,7 @@ function algoritm(text, keywords, threshold = {
         //console.log(keys);
         for (var i = 0; i < keys.length; i++) {
             //console.log(i+ ": "+ keys[i].length);
-            if (keys[i].length <= 3) {
+            if (keys[i].length <= 2) {
                 keys[i] = "";
 
             }
